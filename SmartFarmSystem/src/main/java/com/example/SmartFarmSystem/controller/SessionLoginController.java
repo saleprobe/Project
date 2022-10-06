@@ -218,6 +218,26 @@ public class SessionLoginController {
                 .body("스마트팜 고유번호 등록 성공");
     }
 
+    @PostMapping("/inject_crop")  // 작물 등록 API
+    public ResponseEntity<String> registerCrop(
+            @SessionAttribute(name = "userId", required = false) Long userId,
+            @RequestParam("cropname") String cropname,
+            @RequestParam("period") short period, Model model) {
+        model.addAttribute("loginType", "user_related");
+        model.addAttribute("pageName", "마이 페이지");
+
+        if (userId == null) {
+            // 세션이 유효하지 않은 경우
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("유효하지 않은 세션");
+        }
+
+        // 로그인된 사용자의 cropname, period 값을 업데이트
+        boolean updateSuccess = userService.updateUserCrop(userId, cropname, period);
+        System.out.println("INFO    " + updateSuccess);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body("작물 등록 성공");
+    }
 
     @GetMapping("/get_session_id")
     public ResponseEntity<String> getSessionId(HttpServletRequest request) {
