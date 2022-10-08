@@ -1,9 +1,11 @@
 package com.example.SmartFarmSystem.controller;
 
+import com.example.SmartFarmSystem.domain.SmartFarm;
 import com.example.SmartFarmSystem.domain.UserRole;
 import com.example.SmartFarmSystem.domain.dto.JoinRequest;
 import com.example.SmartFarmSystem.domain.dto.LoginRequest;
 import com.example.SmartFarmSystem.domain.entity.User;
+import com.example.SmartFarmSystem.service.SmartFarmService;
 import com.example.SmartFarmSystem.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;

@@ -23,11 +23,11 @@ import java.util.Objects;
 public class SmartFarm {
 
     public int getsf_id() {
-        return sf_id;
+        return sfid;
     }
 
     public void setsf_id(int sf_id) {
-        this.sf_id = sf_id;
+        this.sfid = sf_id;
     }
 
     @Id
@@ -36,10 +36,10 @@ public class SmartFarm {
     @JsonProperty("id")
     private int id;
 
-    @Digits(integer = 3, fraction = 0)
-    @JsonProperty("sf_id")
-    @Column(nullable = true)
-    private int sf_id;
+    @Digits(integer = 10, fraction = 0)
+    @JsonProperty("sfid")
+    @Column(nullable = true, name = "sf_id")
+    private int sfid;
 
     @JsonProperty("temp")
     @Column(precision = 3, scale = 1, nullable = true)
