@@ -1,5 +1,6 @@
 package com.example.SmartFarmSystem.controller;
 
+import com.example.SmartFarmSystem.auth.JwtTokenUtil;
 import com.example.SmartFarmSystem.domain.UserRole;
 import com.example.SmartFarmSystem.domain.dto.JoinRequest;
 import com.example.SmartFarmSystem.domain.dto.LoginRequest;
@@ -11,6 +12,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -79,6 +81,26 @@ public class UserController {
         return ResponseEntity.ok("회원가입이 완료되었습니다.");
     }
 
+    @PostMapping("/login2")
+    public String login(@RequestBody LoginRequest loginRequest) {
+
+        User user = userService.login(loginRequest);
+
+        // 로그인 아이디나 비밀번호가 틀린 경우 global error return
+        if(user == null) {
+            return"로그인 아이디 또는 비밀번호가 틀렸습니다.";
+        }
+
+        // 로그인 성공 => Jwt Token 발급
+
+        String secretKey = "my-secret-key-123123";
+        long expireTimeMs = 1000 * 60 * 60;     // Token 유효 시간 = 60분
+
+        String jwtToken = JwtTokenUtil.createToken(user.getLoginId(), secretKey, expireTimeMs);
+
+        return jwtToken;
+    }
+
     @GetMapping("/login")
     public String loginPage(Model model) {
         model.addAttribute("loginType", "user_related");
@@ -95,6 +117,9 @@ public class UserController {
         model.addAttribute("pageName", "마이 페이지");
 
         User user = userService.login(loginRequest);
+
+        System.out.println(loginRequest.loginId);
+        System.out.println(loginRequest.password);
 
         // 로그인 아이디나 비밀번호가 틀린 경우
         if (user == null) {
@@ -133,20 +158,20 @@ public class UserController {
         return "redirect:/user_related";
     }
 
-    @GetMapping("/info")
-    public String userInfo(@SessionAttribute(name = "userId", required = false) Long userId, Model model) {
-        model.addAttribute("loginType", "user_related");
-        model.addAttribute("pageName", "마이 페이지");
-
-        User loginUser = userService.getLoginUserById(userId);
-
-        if (loginUser == null) {
-            return "redirect:/user_related/login";
-        }
-
-        model.addAttribute("user", loginUser);
-        return "info";
-    }
+//    @GetMapping("/info")
+//    public String userInfo(@SessionAttribute(name = "userId", required = false) Long userId, Model model) {
+//        model.addAttribute("loginType", "user_related");
+//        model.addAttribute("pageName", "마이 페이지");
+//
+//        User loginUser = userService.getLoginUserById(userId);
+//
+//        if (loginUser == null) {
+//            return "redirect:/user_related/login";
+//        }
+//
+//        model.addAttribute("user", loginUser);
+//        return "info";
+//    }
 
     @GetMapping("/info_sf_id")
     public String sfidInfo(@SessionAttribute(name = "userId", required = false) Long userId, Model model) {
@@ -180,21 +205,8 @@ public class UserController {
     }
 
     @GetMapping("/admin")
-    public String adminPage(@SessionAttribute(name = "userId", required = false) Long userId, Model model) {
-        model.addAttribute("loginType", "user_related");
-        model.addAttribute("pageName", "마이 페이지");
-
-        User loginUser = userService.getLoginUserById(userId);
-
-        if (loginUser == null) {
-            return "redirect:/user_related/login";
-        }
-
-        if (!loginUser.getRole().equals(UserRole.ADMIN)) {
-            return "redirect:/user_related";
-        }
-
-        return "admin";
+    public String adminPage() {
+        return "관리자 페이지 접근 성공";
     }
 
     @PostMapping("/inject_sf_id")  // 스마트팜 고유번호 등록 API
@@ -282,15 +294,15 @@ public class UserController {
                 response.put("nickname", nickname);
 
                 if (userSfId == 0) {
-                    response.put("usersfidRegistable", 200);
+                    response.put("usersfidRegistable", true);
                 } else {
-                    response.put("usersfidRegistable", 400);
+                    response.put("usersfidRegistable", false);
                 }
 
                 if (cropName == null) {
-                    response.put("cropnameRegistable", 200);
+                    response.put("cropnameRegistable", true);
                 } else {
-                    response.put("cropnameRegistable", 400);
+                    response.put("cropnameRegistable", false);
                 }
 
                 return ResponseEntity.ok(response);
@@ -299,5 +311,13 @@ public class UserController {
 
         response.put("error", "사용자 정보를 불러올 수 없거나 로그인되지 않았습니다.");
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+    @GetMapping("/info")
+    public String userInfo(Authentication auth) {
+        User loginUser = userService.getLoginUserByLoginId(auth.getName());
+
+        return String.format("loginId : %s\nnickname : %s\nrole : %s",
+                loginUser.getLoginId(), loginUser.getNickname(), loginUser.getRole().name());
     }
 }
