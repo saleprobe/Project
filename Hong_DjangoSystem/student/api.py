@@ -10,3 +10,10 @@ class StudentList(APIView) :
         model = Student.objects.all()
         serializer = StudentSerializer(model, many=True)
         return Response(serializer.data)
+
+    def post(self, requset):
+        serializer = StudentSerializer(data=requset.data)
+        if serializer.is_valid() :
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
