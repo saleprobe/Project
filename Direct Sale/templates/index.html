@@ -1,3 +1,11 @@
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <script>
+            alert("{{messages[-1]}}")
+        </script>
+    {% endif %}
+{% endwith %}
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -18,9 +26,10 @@
     <input type='text' placeholder="이름"></button>
     <input type='button' value='버튼'></button>
     -->
-    <p></p>
+    {%if not userid%}
     <button onclick="location.href='/login'">로그인 화면으로</button >
     <button onclick="location.href='/register'">회원가입</button >
+    {%endif%}
 
     <p>농산물 목록</p>
     <button onclick="location.href='/listofproduct'">사과</button >

@@ -8,6 +8,7 @@ from models import Fcuser
 from flask import session
 from flask_wtf.csrf import CSRFProtect
 from forms import RegisterForm, LoginForm
+from flask import flash
 
 app = Flask(__name__)
 
@@ -35,6 +36,7 @@ def register():
 
 @app.route("/listofproduct")
 def list_of_product():
+    flash("Test")
     return "미구현"
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -44,6 +46,7 @@ def login():
         session['userid'] = form.data.get('userid')  # form에서 가져온 userid를 session에 저장
 
         return redirect('/')  # 로그인에 성공하면 홈화면으로 redirect
+
 
     return render_template('login.html', form=form)
 
