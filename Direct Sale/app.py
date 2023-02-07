@@ -1,7 +1,7 @@
-import os #절대경로를 지정하기 위한 Os모듈 임포트
+import os  #절대경로를 지정하기 위한 Os모듈 임포트
 from flask import Flask
-from flask import request #회원정보 제출했을때 받아오기 위한 request, post요청을 활성화시키기 위함
-from flask import redirect   #페이지 이동시키는 함수
+from flask import request  #회원정보 제출했을때 받아오기 위한 request, post요청을 활성화시키기 위함
+from flask import redirect  #페이지 이동시키는 함수
 from flask import render_template
 from models import db
 from models import Fcuser
@@ -26,13 +26,14 @@ def register():
         fcuser = Fcuser()  # models.py에 있는 Fcuser
         fcuser.userid = form.data.get('userid')
         fcuser.username = form.data.get('username')
+        fcuser.address = form.data.get('address')
         fcuser.password = form.data.get('password')
 
         print(fcuser.userid, fcuser.password)  # 회원가입 요청시 콘솔창에 ID만 출력 (확인용, 딱히 필요없음)
         db.session.add(fcuser)  # id, name 변수에 넣은 회원정보 DB에 저장
         db.session.commit()  # 커밋
-        return "가입 완료"  # post요청일시는 '/'주소로 이동. (회원가입 완료시 화면이동)
-    return render_template('register.html', form=form)
+        flash("가입이 완료 되었습니다.")  # (회원가입 완료시 화면이동)
+    return render_template('index.html', form=form)
 
 @app.route("/listofproduct")
 def list_of_product():
