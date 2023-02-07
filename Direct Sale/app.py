@@ -32,13 +32,23 @@ def register():
         print(fcuser.userid, fcuser.password)  # 회원가입 요청시 콘솔창에 ID만 출력 (확인용, 딱히 필요없음)
         db.session.add(fcuser)  # id, name 변수에 넣은 회원정보 DB에 저장
         db.session.commit()  # 커밋
-        flash("가입이 완료 되었습니다.")  # (회원가입 완료시 화면이동)
-    return render_template('index.html', form=form)
+        flash("가입이 완료 되었습니다.")  # 팝업
+        return redirect('/')  # 회원가입 완료시 화면이동
+    return render_template('register.html', form=form)
 
 @app.route("/listofproduct")
 def list_of_product():
     flash("Test")
     return "미구현"
+@app.route("/aori")
+def aori():
+    return "아오리 구매 페이지 미구현"
+@app.route("/hongro")
+def hongro():
+    return "홍로 구매 페이지 미구현"
+@app.route("/busa")
+def busa():
+    return "부사 구매 페이지 미구현"
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
