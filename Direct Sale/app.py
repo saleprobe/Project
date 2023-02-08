@@ -13,9 +13,9 @@ from flask import flash
 app = Flask(__name__)
 
 @app.route("/")
-def hello():
+def main():
     userid = session.get('userid', None)
-    return render_template('index.html',userid=userid)
+    return render_template('index.html', userid=userid)
 
 @app.route('/register', methods=['GET','POST'])
 def register():
@@ -40,15 +40,14 @@ def register():
 def list_of_product():
     flash("Test")
     return "미구현"
-@app.route("/aori")
-def aori():
-    return "아오리 구매 페이지 미구현"
-@app.route("/hongro")
-def hongro():
-    return "홍로 구매 페이지 미구현"
-@app.route("/busa")
-def busa():
-    return "부사 구매 페이지 미구현"
+@app.route("/buy", methods=['GET', 'POST'])
+def buy_receipt():  # 구매 버튼(주문서 작성) 함수
+    kind = request.args.get("kind")
+    userid = request.args.get("user")
+    if userid == 'None':  # 로그인 X
+        flash("로그인 후 서비스 이용 가능합니다.")
+        return redirect('/')
+    return "미구현 페이지"
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -57,7 +56,6 @@ def login():
         session['userid'] = form.data.get('userid')  # form에서 가져온 userid를 session에 저장
 
         return redirect('/')  # 로그인에 성공하면 홈화면으로 redirect
-
 
     return render_template('login.html', form=form)
 

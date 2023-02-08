@@ -1,4 +1,4 @@
-from flask import flash, redirect
+from flask import flash, redirect, url_for
 from flask_wtf import FlaskForm
 from models import Fcuser
 from wtforms import StringField, PasswordField
@@ -19,18 +19,20 @@ class LoginForm(FlaskForm):
             userid = form['userid'].data
             print(userid)
             password = field.data
-            if Fcuser.query.filter_by(userid=userid).first() != None:
+            if Fcuser.query.filter_by(userid=userid).first() != None:  # userid 필드에서 입력한 userid와 일치 하는 튜플의 첫번째 값이 존재한다면
                 fcuser = Fcuser.query.filter_by(userid=userid).first()
                 print(fcuser.password)
             else:
                 flash("없는 아이디 입니다.")
                 # return redirect('/index.html')
-                raise ValueError('Wrong id')
+                form['userid'].data = ''
+                return redirect(url_for('main'))
             if fcuser.password != password:
                 # raise ValidationError(message % d)
                 # return "비밀번호가 틀립니다"
                 flash("비밀번호가 틀립니다.")
                 # return redirect('/index.html')
-                raise ValueError('Wrong password')
+                form['userid'].data = ''
+                return redirect(url_for('main'))
     userid = StringField('userid', validators=[DataRequired()])
     password = PasswordField('password', validators=[DataRequired(), UserPassword()])

@@ -33,11 +33,11 @@
 
     <h3>농산물 목록</h3>
     <img src={{ url_for('static', filename='images/아오리.png') }}>
-    <p>아오리 1kg 당 5,000원 <button onclick="location.href='/aori'">구매</button></p>
+    <p>아오리 1kg 당 5,000원 <button onclick="location.href='/buy?kind=aori&user={{ userid }}'">구매</button></p>
     <img src={{ url_for('static', filename='images/홍로.png') }}>
-    <p>홍로 1kg 당 5,200원 <button onclick="location.href='/hongro'">구매</button></p>
+    <p>홍로 1kg 당 5,200원 <button onclick="location.href='/buy?kind=hongro&user={{ userid }}'">구매</button></p>
     <img src={{ url_for('static', filename='images/부사.png') }}>
-    <p>부사 1kg 당 5,500원 <button onclick="location.href='/busa'">구매</button></p>
+    <p>부사 1kg 당 5,500원 <button onclick="location.href='/buy?kind=busa&user={{ userid }}'">구매</button></p>
 <!--    <button onclick="location.href='/listofproduct'">사과</button >-->
 </body>
 </html>
