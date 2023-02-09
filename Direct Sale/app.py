@@ -4,10 +4,10 @@ from flask import request  #회원정보 제출했을때 받아오기 위한 req
 from flask import redirect  #페이지 이동시키는 함수
 from flask import render_template
 from models import db
-from models import Fcuser
+from models import Fcuser, Receipt
 from flask import session
 from flask_wtf.csrf import CSRFProtect
-from forms import RegisterForm, LoginForm
+from forms import RegisterForm, ReceiptRegisterForm, LoginForm
 from flask import flash
 
 app = Flask(__name__)
@@ -42,12 +42,38 @@ def list_of_product():
     return "미구현"
 @app.route("/buy", methods=['GET', 'POST'])
 def buy_receipt():  # 구매 버튼(주문서 작성) 함수
-    kind = request.args.get("kind")
+    kind = request.args.get("kind")  # 영어로 쿼리문자를 받고,
+    kind_dict = { "aori": "아오리",  # 해당하는 한글에 매치
+                  "hongro": "홍로",
+                  "busa": "부사", }
+    kind = kind_dict[kind]
+    print(kind)
     userid = request.args.get("user")
+    print(userid)
     if userid == 'None':  # 로그인 X
         flash("로그인 후 서비스 이용 가능합니다.")
         return redirect('/')
-    return "미구현 페이지"
+    else:  # 로그인 O
+        form = ReceiptRegisterForm()
+        fcuser = Fcuser.query.filter_by(userid=userid).first()  # 'fcuser'테이블에서 userid필드가 일치하는 튜플의 커서를 리턴
+        print(fcuser.userid)
+        if form.validate_on_submit():  # POST검사의 유효성검사가 정상적으로 되었는지 확인할 수 있다. 입력 안한것들이 있는지 확인됨.
+            # 비밀번호 = 비밀번호 확인 -> EqulaTo
+
+            receipt = Receipt()  # models.py에 있는 Receipt
+            receipt.userid = form.data.get('userid')
+            receipt.username = form.data.get('username')
+            receipt.address = form.data.get('address')
+            receipt.number = form.data.get('number')
+            receipt.weight = form.data.get('weight')
+            receipt.kind = form.data.get('kind')
+
+            print(receipt.userid, receipt.weight)
+            db.session.add(receipt)  # id, name 변수에 넣은 회원정보 DB에 저장
+            db.session.commit()  # 커밋
+            flash("주문이 완료 되었습니다.")  # 팝업
+            return redirect('/')  # 주문서 작성 완료시 화면이동
+        return render_template('transaction.html', form=form, form2=fcuser, kind=kind)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

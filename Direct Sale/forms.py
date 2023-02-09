@@ -11,6 +11,14 @@ class RegisterForm(FlaskForm):
     password = PasswordField('password', validators=[DataRequired(), EqualTo('re_password')]) #equalTo("필드네임")
     re_password = PasswordField('re_password', validators=[DataRequired()])
 
+class ReceiptRegisterForm(FlaskForm):
+    userid = StringField('userid', validators=[DataRequired()])
+    username = StringField('username', validators=[DataRequired()])
+    address = StringField('address', validators=[DataRequired()])
+    number = StringField('number', validators=[DataRequired()])
+    weight = StringField('weight', validators=[DataRequired()])
+    kind = StringField('kind', validators=[DataRequired()])
+
 class LoginForm(FlaskForm):
     class UserPassword(object):
         def __init__(self, message=None):
