@@ -1,13 +1,13 @@
-import os  #절대경로를 지정하기 위한 Os모듈 임포트
-from flask import Flask
-from flask import request  #회원정보 제출했을때 받아오기 위한 request, post요청을 활성화시키기 위함
-from flask import redirect  #페이지 이동시키는 함수
+import os  # 절대경로를 지정하기 위한 Os모듈 임포트
+from flask import Flask, request
+from flask import request  # 회원정보 제출했을때 받아오기 위한 request, post요청을 활성화시키기 위함
+from flask import redirect  # 페이지 이동시키는 함수
 from flask import render_template
 from models import db
 from models import Fcuser, Receipt
 from flask import session
 from flask_wtf.csrf import CSRFProtect
-from forms import RegisterForm, ReceiptRegisterForm, LoginForm
+from forms import RegisterForm, LoginForm, ReceiptRegisterForm
 from flask import flash
 
 app = Flask(__name__)
@@ -27,6 +27,7 @@ def register():
         fcuser.userid = form.data.get('userid')
         fcuser.username = form.data.get('username')
         fcuser.address = form.data.get('address')
+        fcuser.number = form.data.get('number')
         fcuser.password = form.data.get('password')
 
         print(fcuser.userid, fcuser.password)  # 회원가입 요청시 콘솔창에 ID만 출력 (확인용, 딱히 필요없음)
@@ -75,6 +76,7 @@ def buy_receipt():  # 구매 버튼(주문서 작성) 함수
             return redirect('/')  # 주문서 작성 완료시 화면이동
         return render_template('transaction.html', form=form, form2=fcuser, kind=kind)
 
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()  # 로그인 폼 생성
@@ -83,9 +85,10 @@ def login():
 
         return redirect('/')  # 로그인에 성공하면 홈화면으로 redirect
 
+
     return render_template('login.html', form=form)
 
-@app.route('/logout',methods=['GET'])
+@app.route('/logout', methods=['GET'])
 def logout():
     session.pop('userid',None)
     return redirect('/')
@@ -110,4 +113,4 @@ if __name__ == "__main__":
     with app.app_context():
         db.create_all() # db생성
 
-    app.run(host="127.0.0.1", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)

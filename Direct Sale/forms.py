@@ -1,6 +1,6 @@
 from flask import flash, redirect, url_for
 from flask_wtf import FlaskForm
-from models import Fcuser
+from models import Fcuser, Receipt
 from wtforms import StringField, PasswordField
 from wtforms.validators import DataRequired, EqualTo
 
@@ -8,6 +8,7 @@ class RegisterForm(FlaskForm):
     userid = StringField('userid', validators=[DataRequired()])
     username = StringField('username', validators=[DataRequired()])
     address = StringField('address', validators=[DataRequired()])
+    number = StringField('number', validators=[DataRequired()])
     password = PasswordField('password', validators=[DataRequired(), EqualTo('re_password')]) #equalTo("필드네임")
     re_password = PasswordField('re_password', validators=[DataRequired()])
 
