@@ -41,6 +41,8 @@ def register():
 def list_of_product():
     flash("Test")
     return "미구현"
+
+# 주문서 작성 페이지
 @app.route("/buy", methods=['GET', 'POST'])
 def buy_receipt():  # 구매 버튼(주문서 작성) 함수
     kind = request.args.get("kind")  # 영어로 쿼리문자를 받고,
@@ -68,6 +70,7 @@ def buy_receipt():  # 구매 버튼(주문서 작성) 함수
             receipt.number = form.data.get('number')
             receipt.weight = form.data.get('weight')
             receipt.kind = form.data.get('kind')
+            receipt.requested_term = form.data.get('requested_term')
 
             print(receipt.userid, receipt.weight)
             db.session.add(receipt)  # id, name 변수에 넣은 회원정보 DB에 저장

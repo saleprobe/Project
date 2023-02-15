@@ -20,3 +20,4 @@ class Receipt(db.Model):
     address = db.Column(db.String(64))
     weight = db.Column(db.String(3))
     kind = db.Column(db.String(10))
+    requested_term = db.Column(db.String(64))

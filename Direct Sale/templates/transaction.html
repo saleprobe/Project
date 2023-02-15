@@ -1,3 +1,4 @@
+<!--주문서 작성 페이지-->
 <html>
     <head>
         <meta charset='utf-8'/>
@@ -60,6 +61,12 @@
                         <input type="text" class="form-control" id="username" placeholder="사용자이름" name="username" /> -->
                         {{form.weight.label("구매 kg 수")}}
                         {{form.weight(class="form-control", placeholder="")}}
+                    </div>
+                    <div class="form-group">
+                        <!-- <label for="username">이름</label>
+                        <input type="text" class="form-control" id="username" placeholder="사용자이름" name="username" /> -->
+                        {{form.requested_term.label("요청사항")}}
+                        {{form.requested_term(class="form-control", placeholder="")}}
                     </div>
                     <button type="submit" class="btn btn-primary">제출</button>
                 </form>

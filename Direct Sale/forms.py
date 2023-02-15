@@ -19,6 +19,7 @@ class ReceiptRegisterForm(FlaskForm):
     number = StringField('number', validators=[DataRequired()])
     weight = StringField('weight', validators=[DataRequired()])
     kind = StringField('kind', validators=[DataRequired()])
+    requested_term = StringField('requested_term')
 
 class LoginForm(FlaskForm):
     class UserPassword(object):
