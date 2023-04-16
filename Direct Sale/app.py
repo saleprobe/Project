@@ -11,6 +11,7 @@ from forms import RegisterForm, LoginForm, ReceiptRegisterForm
 from flask import flash
 
 app = Flask(__name__)
+app.secret_key = 'my_secret_key'
 
 @app.route("/")
 def main():
@@ -20,6 +21,8 @@ def main():
 @app.route('/register', methods=['GET','POST'])
 def register():
     form = RegisterForm()
+    if form.data.get('userid') == 'None':
+        flash("로그인 후 서비스 이용 가능합니다.")
     if form.validate_on_submit():  # POST검사의 유효성검사가 정상적으로 되었는지 확인할 수 있다. 입력 안한것들이 있는지 확인됨.
         # 비밀번호 = 비밀번호 확인 -> EqulaTo
 
@@ -90,7 +93,6 @@ def login():
 
 
     return render_template('login.html', form=form)
-
 @app.route('/logout', methods=['GET'])
 def logout():
     session.pop('userid',None)
