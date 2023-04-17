@@ -1,8 +1,9 @@
 import os  # 절대경로를 지정하기 위한 Os모듈 임포트
-from flask import Flask, request
+from flask import Flask
 from flask import request  # 회원정보 제출했을때 받아오기 위한 request, post요청을 활성화시키기 위함
 from flask import redirect  # 페이지 이동시키는 함수
 from flask import render_template
+from flask import jsonify
 from models import db
 from models import Fcuser, Receipt
 from flask import session
@@ -21,8 +22,6 @@ def main():
 @app.route('/register', methods=['GET','POST'])
 def register():
     form = RegisterForm()
-    if form.data.get('userid') == 'None':
-        flash("로그인 후 서비스 이용 가능합니다.")
     if form.validate_on_submit():  # POST검사의 유효성검사가 정상적으로 되었는지 확인할 수 있다. 입력 안한것들이 있는지 확인됨.
         # 비밀번호 = 비밀번호 확인 -> EqulaTo
 
@@ -39,6 +38,19 @@ def register():
         flash("가입이 완료 되었습니다.")  # 팝업
         return redirect('/')  # 회원가입 완료시 화면이동
     return render_template('register.html', form=form)
+
+@app.route('/check_username', methods=['GET', 'POST'])
+def check_username():
+    # 받은 데이터에서 아이디 추출
+    username = request.form.get('username')
+
+    # 중복 체크 로직
+    #
+    # ...
+
+    # 결과 반환
+    return jsonify({'result': True})  # 중복되지 않은 경우
+
 
 @app.route("/listofproduct")
 def list_of_product():
