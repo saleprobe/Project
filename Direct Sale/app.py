@@ -45,8 +45,7 @@ def check_username():
     username = request.form.get('username')
 
     # 중복 체크 로직
-    #
-    # ...
+    
 
     # 결과 반환
     return jsonify({'result': True})  # 중복되지 않은 경우
