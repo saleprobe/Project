@@ -45,11 +45,13 @@ def check_username():
     username = request.form.get('username')
 
     # 중복 체크 로직
-    
+    existing_user = Fcuser.query.filter_by(username=username).first()
+    print(existing_user)
+    if existing_user:
+        return jsonify({'result': False})  # 중복된 경우
 
-    # 결과 반환
-    return jsonify({'result': True})  # 중복되지 않은 경우
-
+    # 중복되지 않은 경우
+    return jsonify({'result': True})
 
 @app.route("/listofproduct")
 def list_of_product():
