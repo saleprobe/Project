@@ -42,21 +42,16 @@ def register():
 @app.route('/check_username', methods=['GET', 'POST'])
 def check_username():
     # 받은 데이터에서 아이디 추출
-    username = request.form.get('username')
-
+    userid = request.form.get('userid')
+    print(userid)
     # 중복 체크 로직
-    existing_user = Fcuser.query.filter_by(username=username).first()
+    existing_user = Fcuser.query.filter_by(userid=userid).first()
     print(existing_user)
     if existing_user:
         return jsonify({'result': False})  # 중복된 경우
 
     # 중복되지 않은 경우
     return jsonify({'result': True})
-
-@app.route("/listofproduct")
-def list_of_product():
-    flash("Test")
-    return "미구현"
 
 # 주문서 작성 페이지
 @app.route("/buy", methods=['GET', 'POST'])
