@@ -70,6 +70,10 @@
 $(function() {
     $('#btn-check-userid').click(function() {
         var userid = $('#userid').val();
+        if (userid.trim() === '') {
+            alert('아이디를 입력해주세요.');
+            return;
+            }
         $.ajax({
             url: '/check_userid',
             type: 'GET',
