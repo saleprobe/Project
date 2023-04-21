@@ -30,7 +30,7 @@
                         <input type="text" class="form-control" id="userid" placeholder="아이디" name="userid" /> -->
                         {{form.userid.label("아이디")}}
                         {{form.userid(class="form-control", placeholder="")}}
-                        <button type="button" class="btn btn-outline-primary" id="btn-check-username">중복확인</button>
+                        <button type="button" class="btn btn-outline-primary" id="btn-check-userid">중복확인</button>
                     </div>
                     <div class="form-group">
                         <!-- <label for="username">이름</label>
@@ -68,12 +68,12 @@
                 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
                 <script>
 $(function() {
-    $('#btn-check-username').click(function() {
-        var username = $('#username').val();
+    $('#btn-check-userid').click(function() {
+        var userid = $('#userid').val();
         $.ajax({
-            url: '/check_username',
+            url: '/check_userid',
             type: 'GET',
-            data: {username: username},
+            data: {userid: userid},
             success: function(response) {
                 if (response.result) {
                     alert('사용 가능한 아이디입니다.');

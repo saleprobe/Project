@@ -39,14 +39,13 @@ def register():
         return redirect('/')  # 회원가입 완료시 화면이동
     return render_template('register.html', form=form)
 
-@app.route('/check_username', methods=['GET', 'POST'])
-def check_username():
+@app.route('/check_userid', methods=['GET', 'POST'])
+def check_userid():
     # 받은 데이터에서 아이디 추출
-    userid = request.form.get('userid')
-    print(userid)
+    userid = request.args.get('userid')
+
     # 중복 체크 로직
     existing_user = Fcuser.query.filter_by(userid=userid).first()
-    print(existing_user)
     if existing_user:
         return jsonify({'result': False})  # 중복된 경우
 
