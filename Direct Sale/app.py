@@ -105,6 +105,10 @@ def logout():
     session.pop('userid',None)
     return redirect('/')
 
+@app.route("/mypage")
+def popup():
+    return render_template("mypage.html")
+
 if __name__ == "__main__":
     basedir = os.path.abspath(os.path.dirname(__file__))  # db파일을 절대경로로 생성
     dbfile = os.path.join(basedir, 'db.sqlite')  # db파일을 절대경로로 생성
