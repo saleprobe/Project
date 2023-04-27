@@ -20,7 +20,11 @@ public class Application {
                 System.out.println("센서가 감지되지 않았습니다.");
             }
 
-            Thread.sleep(1000);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }
