@@ -1,26 +1,21 @@
 package org.example;
-import com.pi4j.io.gpio.*;
 
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/led")
 public class LEDController {
-    public static void main(String[] args) {
-        // GPIO 핀 설정
-        final GpioController gpio = GpioFactory.getInstance();
-        final GpioPinDigitalOutput ledPin = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_01, "LED", PinState.LOW);
 
-        // LED On/Off
-        while (true) {
-            ledPin.high();
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            ledPin.low();
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }
+    // 서버에서의 LED 상태
+    private boolean isLedOn = false;
+
+    @GetMapping("/status")
+    public String getLEDStatus() {
+        return isLedOn ? "LED is on" : "LED is off";
+    }
+
+    @PutMapping("/status")
+    public void setLEDStatus(@RequestParam("status") boolean status) {
+        isLedOn = status;
     }
 }
