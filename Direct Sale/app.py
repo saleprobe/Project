@@ -25,6 +25,12 @@ def register():
     if form.validate_on_submit():  # POST검사의 유효성검사가 정상적으로 되었는지 확인할 수 있다. 입력 안한것들이 있는지 확인됨.
         # 비밀번호 = 비밀번호 확인 -> EqulaTo
 
+        # 중복된 ID 체크
+        existing_fcuser = Fcuser.query.filter_by(userid=form.data.get('userid')).first()
+        if existing_fcuser:
+            flash("중복된 ID입니다. 다른 ID를 입력해주세요.")
+            return render_template('register.html', form=form)
+
         fcuser = Fcuser()  # models.py에 있는 Fcuser
         fcuser.userid = form.data.get('userid')
         fcuser.username = form.data.get('username')
@@ -105,9 +111,10 @@ def logout():
     session.pop('userid',None)
     return redirect('/')
 
-@app.route('/mypage')
+@app.route('/mypage', methods=['GET', 'POST'])
 def popup():
-    userid = request.args.get('userid')
+    userid = request.args.get("userid")
+    print(userid)
     return render_template('mypage.html', userid=userid)
 
 if __name__ == "__main__":
