@@ -117,10 +117,6 @@ def popup():
     print(userid)
     return render_template('mypage.html', userid=userid)
 
-@app.route('/address/popup')
-def index_address_popup():
-    return render_template('address_popup.html')
-
 if __name__ == "__main__":
     basedir = os.path.abspath(os.path.dirname(__file__))  # db파일을 절대경로로 생성
     dbfile = os.path.join(basedir, 'db.sqlite')  # db파일을 절대경로로 생성
