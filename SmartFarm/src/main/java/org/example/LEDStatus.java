@@ -2,9 +2,11 @@ package org.example;
 
 import org.springframework.data.jpa.repository.*;
 import javax.persistence.*;
+import org.springframework.stereotype.Repository;
 
 @Entity
 @Table(name = "led_status")
+@Repository
 public class LEDStatus {
 
     @Id
