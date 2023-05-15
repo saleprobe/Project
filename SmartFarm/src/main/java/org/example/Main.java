@@ -15,7 +15,7 @@ import org.springframework.context.annotation.ComponentScan;
 public class Main {
 
     @Autowired
-    private static LEDController ledController;
+    private LEDController ledController;
 
     public static void main(String[] args) {
         SpringApplication app = new SpringApplication(Main.class);
