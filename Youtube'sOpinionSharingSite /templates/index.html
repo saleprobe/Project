@@ -2,15 +2,52 @@
 <html>
 <head>
     <title>게시물 등록</title>
+    <style>
+        /* 팝업 스타일 */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .popup-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-    <h1>게시물 등록</h1>
+    <!-- 추가된 버튼 -->
+    <button onclick="openPopup()">게시물 추가</button>
 
-    <form method="post" action="/">
-        <input type="text" name="title" placeholder="제목" required><br><br>
-        <textarea name="content" placeholder="내용" required></textarea><br><br>
-        <input type="submit" value="등록">
-    </form>
+    <!-- 팝업 내용 -->
+    <div id="popup" class="popup-overlay" style="display: none;">
+        <div class="popup-content">
+            <span class="close-button" onclick="closePopup()">&times;</span>
+            <h1>게시물 등록</h1>
+
+            <form method="post" action="/">
+                <input type="text" name="title" placeholder="제목" required><br><br>
+                <textarea name="content" placeholder="내용" required></textarea><br><br>
+                <input type="submit" value="등록">
+            </form>
+        </div>
+    </div>
 
     <h2>게시물 목록</h2>
     {% for post in posts %}
@@ -19,5 +56,17 @@
             <p>{{ post.content }}</p>
         </div>
     {% endfor %}
+
+
+
+    <script>
+        function openPopup() {
+            document.getElementById("popup").style.display = "flex";
+        }
+
+        function closePopup() {
+            document.getElementById("popup").style.display = "none";
+        }
+    </script>
 </body>
 </html>
