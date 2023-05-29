@@ -58,6 +58,12 @@
     </div>
     {% endfor %}
 
+    <!-- 페이징 버튼 -->
+    <div class="paging">
+        {% if posts|length >= POSTS_PER_PAGE %}
+        <a href="/page/{{ page + 1 }}">다음 페이지</a>
+        {% endif %}
+    </div>
 
     <script>
         var popup = document.getElementById("popup");
