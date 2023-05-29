@@ -5,6 +5,9 @@ app = Flask(__name__)
 # 임시로 게시물을 저장할 리스트
 posts = []
 
+# 페이지당 게시물 개수
+POSTS_PER_PAGE = 5
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
@@ -16,6 +19,14 @@ def index():
         return render_template('index.html', posts=posts)
     # GET 요청이 들어오면 기존 게시물 목록을 템플릿에 전달
     return render_template('index.html', posts=posts)
+
+@app.route('/page/<int:page>', methods=['GET'])
+def view_page(page):
+    # 해당 페이지의 게시물 목록을 템플릿에 전달
+    return render_template('index.html', posts=get_posts_for_page(page), page=page)
+
+def get_posts_for_page(page):
+    pass
 
 if __name__ == '__main__':
     app.run(debug=True, port=8080)
