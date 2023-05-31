@@ -29,10 +29,21 @@
             right: 10px;
             cursor: pointer;
         }
+
+        /* 추가된 스타일 */
+        .page-info {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+        }
+
+        .page-info a {
+            margin: 0 5px;
+        }
     </style>
 </head>
 <body>
-    <button onclick="location.href='/login'">로그인</button >
+    <button onclick="location.href='/login'">로그인</button>
     <!-- 추가된 버튼 -->
     <button onclick="openPopup()">게시물 등록</button>
 
@@ -45,9 +56,25 @@
             <form method="post" action="/">
                 <input type="text" name="title" placeholder="제목" required><br><br>
                 <textarea name="content" placeholder="내용" required></textarea><br><br>
+                <input type="hidden" name="page" value="{{ page }}">
                 <input type="submit" value="등록">
             </form>
         </div>
+    </div>
+
+    <!-- 추가된 페이지 정보 -->
+    <div class="page-info">
+        {% if page > 1 %}
+            <a href="/page/{{ page - 1 }}">이전 페이지</a>
+        {% else %}
+            <span>이전 페이지</span>
+        {% endif %}
+        <span>현재 페이지: {{ page }}</span>
+        {% if (page - 1) * POSTS_PER_PAGE + POSTS_PER_PAGE < posts|length %}
+            <a href="/page/{{ page + 1 }}">다음 페이지</a>
+        {% else %}
+            <span>다음 페이지</span>
+        {% endif %}
     </div>
 
     <h2>게시물 목록</h2>
