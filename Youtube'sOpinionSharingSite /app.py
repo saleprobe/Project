@@ -39,7 +39,7 @@ def get_posts_for_page(page):
     # 페이지에 해당하는 게시물 목록을 반환
     start_index = (page - 1) * POSTS_PER_PAGE
     end_index = start_index + POSTS_PER_PAGE
-    return posts[::-1][start_index:end_index]
+    return posts[start_index:end_index]
 
 if __name__ == '__main__':
     app.run(debug=True, port=8080)
