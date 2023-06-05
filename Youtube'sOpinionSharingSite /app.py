@@ -27,12 +27,12 @@ def index():
         posts.append({'title': title, 'content': content})
 
     # GET 요청이 들어오면 페이지 번호를 1로 설정하여 기존 게시물 목록과 페이지 번호를 템플릿에 전달
-    return render_template('index.html', posts=posts, page=1, POSTS_PER_PAGE=POSTS_PER_PAGE)
+    return render_template('index.html', posts=posts[::-1], page=1, POSTS_PER_PAGE=POSTS_PER_PAGE)
 
 @app.route('/page/<int:page>', methods=['GET'])
 def view_page(page):
     # 해당 페이지의 게시물 목록과 페이지 번호를 템플릿에 전달
-    return render_template('index.html', posts=posts, page=page, POSTS_PER_PAGE=POSTS_PER_PAGE)
+    return render_template('index.html', posts=get_posts_for_page(page), page=page, POSTS_PER_PAGE=POSTS_PER_PAGE)
 
 
 def get_posts_for_page(page):
