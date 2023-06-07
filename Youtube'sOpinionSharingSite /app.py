@@ -27,19 +27,22 @@ def index():
         posts.append({'title': title, 'content': content})
 
     # GET 요청이 들어오면 페이지 번호를 1로 설정하여 기존 게시물 목록과 페이지 번호를 템플릿에 전달
-    return render_template('index.html', posts=posts[::-1], page=1, POSTS_PER_PAGE=POSTS_PER_PAGE)
+    return render_template('index.html', posts=posts[::-1], page=1, total_pages=get_total_pages(), POSTS_PER_PAGE=POSTS_PER_PAGE)
 
 @app.route('/page/<int:page>', methods=['GET'])
 def view_page(page):
     # 해당 페이지의 게시물 목록과 페이지 번호를 템플릿에 전달
-    return render_template('index.html', posts=get_posts_for_page(page), page=page, POSTS_PER_PAGE=POSTS_PER_PAGE)
-
+    return render_template('index.html', posts=get_posts_for_page(page), page=page, total_pages=get_total_pages(), POSTS_PER_PAGE=POSTS_PER_PAGE)
 
 def get_posts_for_page(page):
     # 페이지에 해당하는 게시물 목록을 반환
     start_index = (page - 1) * POSTS_PER_PAGE
     end_index = start_index + POSTS_PER_PAGE
     return posts[start_index:end_index]
+
+def get_total_pages():
+    # 총 페이지 수 계산
+    return (len(posts) + POSTS_PER_PAGE - 1) // POSTS_PER_PAGE
 
 if __name__ == '__main__':
     app.run(debug=True, port=8080)

@@ -73,7 +73,11 @@
         {% if (page - 1) * POSTS_PER_PAGE + POSTS_PER_PAGE < posts|length %}
             <button onclick="location.href='/page/{{ page + 1 }}'">다음 페이지</button>
         {% else %}
-            <button disabled>다음 페이지</button>
+            {% if page < total_pages %}
+                <button onclick="location.href='/page/{{ page + 1 }}'">다음 페이지</button>
+            {% else %}
+                <button disabled>다음 페이지</button>
+            {% endif %}
         {% endif %}
     </div>
 
