@@ -82,21 +82,12 @@
     </div>
 
     <h2>게시물 목록</h2>
-    {% if page == 1 %}
-    {% for post in posts %}
-        <div>
-            <h3>{{ post.title }}</h3>
-            <p>{{ post.content }}</p>
-        </div>
-    {% endfor %}
-{% else %}
     {% for post in posts[::-1][:5] %}
-        <div>
-            <h3>{{ post.title }}</h3>
-            <p>{{ post.content }}</p>
-        </div>
+    <div>
+        <h3>{{ post.title }}</h3>
+        <p>{{ post.content }}</p>
+    </div>
     {% endfor %}
-{% endif %}
 
     <script>
         var popup = document.getElementById("popup");
