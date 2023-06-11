@@ -40,6 +40,11 @@
         .page-info button {
             margin: 0 5px;
         }
+
+        .post-image {
+            max-width: 200px;
+            max-height: 200px;
+        }
     </style>
 </head>
 <body>
@@ -56,6 +61,7 @@
             <form method="post" action="/">
                 <input type="text" name="title" placeholder="제목" required><br><br>
                 <textarea name="content" placeholder="내용" required></textarea><br><br>
+                <input type="text" name="image_url" placeholder="이미지 URL"><br><br> <!-- 이미지 URL 입력 필드 -->
                 <input type="hidden" name="page" value="{{ page }}">
                 <input type="submit" value="등록">
             </form>
@@ -86,6 +92,9 @@
     <div>
         <h3>{{ post.title }}</h3>
         <p>{{ post.content }}</p>
+        {% if post.image_url %}
+            <img class="post-image" src="{{ post.image_url }}" alt="게시물 이미지">
+        {% endif %}
     </div>
     {% endfor %}
 
