@@ -23,8 +23,9 @@ def index():
         # 게시물 등록 요청을 처리하는 부분
         title = request.form.get('title')
         content = request.form.get('content')
+        image_url = request.form.get('image_url')  # 이미지 URL 가져오기
         # 게시물 등록
-        posts.append({'title': title, 'content': content})
+        posts.append({'title': title, 'content': content, 'image_url': image_url})
 
     # GET 요청이 들어오면 페이지 번호를 1로 설정하여 기존 게시물 목록과 페이지 번호를 템플릿에 전달
     return render_template('index.html', posts=posts[::-1], page=1, total_pages=get_total_pages(), POSTS_PER_PAGE=POSTS_PER_PAGE)

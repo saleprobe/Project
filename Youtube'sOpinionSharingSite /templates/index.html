@@ -103,8 +103,8 @@
             <img class="post-image" src="{{ post.image_url }}" alt="게시물 이미지">
         {% endif %}
         <div class="post-content">
-            <h3>{{ post.title }}</h3>
-            <p>{{ post.content }}</p>
+            <h3>{{ post['title'] }}</h3>  <!-- 수정된 부분: post.title을 post['title']로 변경 -->
+            <p>{{ post['content'] }}</p>  <!-- 수정된 부분: post.content를 post['content']로 변경 -->
         </div>
     </div>
     {% endfor %}
