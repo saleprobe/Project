@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 from jinja2 import Environment
+import re
 
 app = Flask(__name__)
 
@@ -23,7 +24,13 @@ def index():
         # 게시물 등록 요청을 처리하는 부분
         title = request.form.get('title')
         content = request.form.get('content')
-        image_url = request.form.get('image_url')  # 이미지 URL 가져오기
+        image_url = request.form.get('image_url')
+
+        # 이미지 URL 변환
+        if 'youtu.be' in image_url:
+            video_id = re.search(r'youtu.be/([^/?]+)', image_url).group(1)
+            image_url = f'https://img.youtube.com/vi/{video_id}/0.jpg'
+
         # 게시물 등록
         posts.append({'title': title, 'content': content, 'image_url': image_url})
 
