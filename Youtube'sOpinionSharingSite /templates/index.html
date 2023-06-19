@@ -101,7 +101,7 @@
     {% for post in posts[::][:5] %}
     <div class="post-container">
         {% if post.image_url %}
-            <a href="{{ post.image_url }}" target="_blank">
+            <a href="https://youtu.be/{{ post.image_url.split('/')[-2] }}" target="_blank">
                 <img class="post-image" src="{{ post.image_url }}" alt="게시물 이미지">
             </a>
         {% endif %}
