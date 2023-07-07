@@ -2,6 +2,7 @@ package honghello.honghellospring.repository;
 
 import honghello.honghellospring.domain.Member;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -11,6 +12,11 @@ import static org.assertj.core.api.Assertions.*;
 class MemoryMemberRepositoryTest {
 
     MemoryMemberRepository repository = new MemoryMemberRepository();
+
+    @AfterEach
+    public void afterEach(){
+        repository.clearStore();
+    }
 
     @Test
     public void save(){
