@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>JSON Upload</title>
+</head>
+<body>
+<h1>JSON Upload</h1>
+<form id="uploadForm" enctype="multipart/form-data">
+    <input type="file" name="jsonFile" accept=".json" required>
+    <button type="submit">Upload</button>
+</form>
+
+<script>
+        // 폼 제출 시 페이지 이동을 막는 함수
+        document.getElementById("uploadForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // 기본 동작인 페이지 이동을 막음
+
+            // 폼 데이터를 서버로 전송하는 비동기 요청 (AJAX)
+            var formData = new FormData(this);
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/upload");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    console.log("Uploaded successfully!");
+                }
+            };
+            xhr.send(formData);
+        });
+    </script>
+</body>
+</html>
