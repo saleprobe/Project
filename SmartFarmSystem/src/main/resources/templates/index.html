@@ -2,15 +2,19 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>JSON Upload</title>
+    <title>Smart Farm System</title>
 </head>
 <body>
-<h1>JSON Upload</h1>
+<h1>Server Main Page</h1>
+<h3>Json Uploader</h3>
 <form id="uploadForm" enctype="multipart/form-data">
     <input type="file" name="jsonFile" accept=".json" required>
     <button type="submit">Upload</button>
 </form>
-
+<br>
+<p>/ => post요청 받으면 db에 저장</p>
+<p>/react => post요청 받으면 db에 저장 후, db 가장 최근튜플로 응답</p>
+<p>/data => get or post 요청 받으면 db 가장 최근 튜플로 응답</p>
 <script>
         // 폼 제출 시 페이지 이동을 막는 함수
         document.getElementById("uploadForm").addEventListener("submit", function(event) {
