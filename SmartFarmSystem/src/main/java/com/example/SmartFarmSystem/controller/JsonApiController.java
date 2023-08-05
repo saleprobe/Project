@@ -17,9 +17,17 @@ public class JsonApiController {
     public JsonApiController(SmartFarmService memberService) {
         this.smartFarmService = memberService;
     }
+    @GetMapping("/data")
+    @ResponseBody
+    public SmartFarm getdatag(){
+        System.out.println("Get Request checked");
+        return smartFarmService.getLastSmartFarm();
+    }
+
     @PostMapping("/data")
     @ResponseBody
-    public SmartFarm getdata(){
+    public SmartFarm getdatap(){
+        System.out.println("Post Request checked");
         return smartFarmService.getLastSmartFarm();
     }
 }
