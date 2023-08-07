@@ -13,25 +13,31 @@
 </form>
 <br>
 <p>/ => post요청 받으면 db에 저장</p>
-<p>/react => post요청 받으면 db에 저장 후, db 가장 최근튜플로 응답</p>
-<p>/data => get or post 요청 받으면 db 가장 최근 튜플로 응답</p>
+<p>/react => post요청 받으면 db에 저장 후, db 가장 최근 튜플로 응답</p>
+<p>/data => get or post요청 받으면 db 가장 최근 튜플로 응답</p>
 <script>
-        // 폼 제출 시 페이지 이동을 막는 함수
-        document.getElementById("uploadForm").addEventListener("submit", function(event) {
-            event.preventDefault(); // 기본 동작인 페이지 이동을 막음
+    // 폼 제출 시 페이지 이동을 막는 함수
+    document.getElementById("uploadForm").addEventListener("submit", function(event) {
+        event.preventDefault(); // 기본 동작인 페이지 이동을 막음
 
-            // 폼 데이터를 서버로 전송하는 비동기 요청 (AJAX)
-            var formData = new FormData(this);
+        // 폼 데이터를 서버로 전송하는 비동기 요청 (AJAX)
+        var formData = new FormData(this);
 
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", "/upload");
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4 && xhr.status === 200) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/upload");
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
                     console.log("Uploaded successfully!");
+                    alert("DB에 저장되었습니다.");
+                } else {
+                    console.log("Upload failed.");
                 }
-            };
-            xhr.send(formData);
-        });
-    </script>
+            }
+        };
+        xhr.send(formData);
+    });
+
+</script>
 </body>
 </html>
