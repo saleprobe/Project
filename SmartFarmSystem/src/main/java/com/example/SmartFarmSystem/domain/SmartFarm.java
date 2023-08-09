@@ -50,8 +50,8 @@ public class SmartFarm {
 
     @JsonProperty("led_adj")
     @Column(scale = 0, nullable = true)
-    @Min(value = 0)
-    @Max(value = 10)
+    @Min(value = 1)
+    @Max(value = 5)
     private int led_adj;
 
     @JsonProperty("water_state")
