@@ -20,16 +20,16 @@ public class SmartFarmService {
         this.smartFarmRepository = smartFarmRepository;
     }
 
-    public SmartFarm saveMemo(SmartFarm smartFarm) {
+    public SmartFarm saveSF(SmartFarm smartFarm) {
         return smartFarmRepository.save(smartFarm);
     }
 
-    public SmartFarm getMemoById(Long id) {
+    public SmartFarm getSFById(Long id) {
         return smartFarmRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Memo not found with id: " + id));
     }
 
-    public void deleteMemoById(Long id) {
+    public void deleteSFById(Long id) {
         smartFarmRepository.deleteById(id);
     }
 

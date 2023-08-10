@@ -21,7 +21,7 @@ public class FrontController {
     @ResponseBody
     public SmartFarm react(@RequestBody SmartFarm smartFarm) throws Exception {
         System.out.println("Received JSON data: " + smartFarm);
-        smartFarmService.saveMemo(smartFarm);
+        smartFarmService.saveSF(smartFarm);
 
         return smartFarmService.getLastSmartFarm();
     }

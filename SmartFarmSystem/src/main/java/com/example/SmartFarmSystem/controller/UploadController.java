@@ -27,7 +27,9 @@ public class UploadController {
         // 파일 처리 로직
         ObjectMapper objectMapper = new ObjectMapper();
         SmartFarm smartFarm = objectMapper.readValue(file.getInputStream(), SmartFarm.class);
-        smartFarmService.saveMemo(smartFarm);
+
+        // 데이터베이스에 Json 데이터를 처리하고 저장
+        smartFarmService.saveSF(smartFarm);
     }
 
     @PostMapping("/")
@@ -35,8 +37,8 @@ public class UploadController {
     public void handleFileUpload(@RequestBody SmartFarm smartFarm) throws Exception {
         System.out.println("Received JSON data: " + smartFarm);
 
-        // Process and save the JSON data to the database
-        smartFarmService.saveMemo(smartFarm);
+        // 데이터베이스에 Json 데이터를 처리하고 저장
+        smartFarmService.saveSF(smartFarm);
     }
 
 }
