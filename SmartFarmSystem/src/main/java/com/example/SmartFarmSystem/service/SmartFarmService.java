@@ -20,13 +20,21 @@ public class SmartFarmService {
         this.smartFarmRepository = smartFarmRepository;
     }
 
-    public SmartFarm saveSF(SmartFarm smartFarm) {
+    public SmartFarm join(SmartFarm smartFarm) {
         return smartFarmRepository.save(smartFarm);
     }
 
-    public SmartFarm getSFById(Long id) {
-        return smartFarmRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Memo not found with id: " + id));
+    public SmartFarm findLatestSmartFarmBySfId(Long sf_id) {
+
+        Sort sort = Sort.by(Sort.Direction.DESC, "id");
+        List<SmartFarm> smartFarms = smartFarmRepository.findAll(sort);
+
+        for (SmartFarm smartFarm : smartFarms) {
+            if (smartFarm.getsf_id() == sf_id) {
+                return smartFarm;
+            }
+        }
+        throw new RuntimeException("SmartFarm not found for sf_id: " + sf_id);
     }
 
     public void deleteSFById(Long id) {
