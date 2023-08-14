@@ -9,6 +9,7 @@ import jakarta.validation.constraints.Min;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 
 @ToString
@@ -20,6 +21,14 @@ import java.math.BigDecimal;
 @Table(name = "smart_farms")
 @Entity
 public class SmartFarm {
+
+    public int getsf_id() {
+        return sf_id;
+    }
+
+    public void setsf_id(int sf_id) {
+        this.sf_id = sf_id;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
