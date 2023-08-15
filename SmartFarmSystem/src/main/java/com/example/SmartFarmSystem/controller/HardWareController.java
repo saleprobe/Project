@@ -29,9 +29,9 @@ public class HardWareController {
     @PostMapping("/raspberrypi")
     @ResponseBody
     public void savedata_r(@RequestBody SmartFarm smartFarm) throws Exception {
-        System.out.println("Received JSON data: " + smartFarm + "from raspberrypi");
+        System.out.println("Received JSON data: " + smartFarm + " from raspberrypi");
 
         // 데이터베이스에 Json 데이터를 처리하고 저장
-        smartFarmService.saveSF(smartFarm);
+        smartFarmService.join(smartFarm);
     }
 }

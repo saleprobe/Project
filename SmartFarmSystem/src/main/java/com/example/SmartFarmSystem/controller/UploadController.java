@@ -29,7 +29,7 @@ public class UploadController {
         SmartFarm smartFarm = objectMapper.readValue(file.getInputStream(), SmartFarm.class);
 
         // 데이터베이스에 Json 데이터를 처리하고 저장
-        smartFarmService.saveSF(smartFarm);
+        smartFarmService.join(smartFarm);
     }
 
     @PostMapping("/")
@@ -38,7 +38,7 @@ public class UploadController {
         System.out.println("Received JSON data: " + smartFarm);
 
         // 데이터베이스에 Json 데이터를 처리하고 저장
-        smartFarmService.saveSF(smartFarm);
+        smartFarmService.join(smartFarm);
     }
 
 }

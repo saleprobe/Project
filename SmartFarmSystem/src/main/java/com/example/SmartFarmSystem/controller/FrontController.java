@@ -20,8 +20,8 @@ public class FrontController {
     @PostMapping("/react")
     @ResponseBody
     public SmartFarm react(@RequestBody SmartFarm smartFarm) throws Exception {
-        System.out.println("Received JSON data: " + smartFarm);
-        smartFarmService.saveSF(smartFarm);
+        System.out.println("Post Request checked(/react)");
+        smartFarmService.join(smartFarm);
 
         return smartFarmService.getLastSmartFarm();
     }
