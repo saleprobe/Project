@@ -6,7 +6,7 @@ import random
 # url = "http://203.230.100.170:10095/raspberrypi"
 # url = "http://203.230.100.170:10095/react"
 # url = "http://localhost:3000/data"
-url = "http://localhost:3000/data"
+url = "http://localhost:3000/"
 # url = "http://203.230.100.170:10095/"
 
 
@@ -14,9 +14,9 @@ url = "http://localhost:3000/data"
 sf_id = 78
 temp = round(29.2, 1)
 hum = round(70.3, 1)
-led_state = 0
-led_toggle = 0
-led_adj = 0
+led_state = 1
+led_toggle = 1
+led_adj = 4
 water_state = 0
 water_toggle = 0
 fan_state = 0
@@ -41,6 +41,6 @@ while 1:
             "led_adj": led_adj,
             "water_state": water_state, "water_toggle": water_toggle, "fan_state": fan_state, "fan_toggle": fan_toggle}
 
-    response = requests.get(url, json=data)
-    # print(data)
-    print(response.json())
+    response = requests.post(url, json=data)
+    print(data)  # 서버로 데이터를 보낼때, 내가 보낸 데이터 확인
+    # print(response.json())  # 서버에서부터 데이터를 받을때, 받은 데이터 확인
