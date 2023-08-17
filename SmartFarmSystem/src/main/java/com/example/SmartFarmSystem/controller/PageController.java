@@ -6,12 +6,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class HomeController {
+public class PageController {
 
     private final SmartFarmService smartFarmService;
 
     @Autowired
-    public HomeController(SmartFarmService smartFarmService) {
+    public PageController(SmartFarmService smartFarmService) {
         this.smartFarmService = smartFarmService;
     }
 

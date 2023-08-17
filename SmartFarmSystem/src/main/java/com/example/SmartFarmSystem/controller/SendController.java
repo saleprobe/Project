@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 //@RestController
 //@RequestMapping("/api")
-public class JsonApiController {
+public class SendController {
 
     private final SmartFarmService smartFarmService;
 
     @Autowired
-    public JsonApiController(SmartFarmService memberService) {
+    public SendController(SmartFarmService memberService) {
         this.smartFarmService = memberService;
     }
 

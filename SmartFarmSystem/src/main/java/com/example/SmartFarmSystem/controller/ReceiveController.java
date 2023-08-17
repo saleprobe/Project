@@ -9,12 +9,12 @@ import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
-public class UploadController {
+public class ReceiveController {
 
     private final SmartFarmService smartFarmService;
 
     @Autowired
-    public UploadController(SmartFarmService memberService) {
+    public ReceiveController(SmartFarmService memberService) {
         this.smartFarmService = memberService;
     }
 
