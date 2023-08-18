@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+
 @Controller
 //@RestController
 //@RequestMapping("/api")
@@ -21,14 +23,16 @@ public class SendController {
     @GetMapping("/data")
     @ResponseBody
     public SmartFarm getdata_g(){
-        System.out.println("Get Request checked");
+        LocalDateTime currentTime = LocalDateTime.now();
+        System.out.println("Get Request checked " + currentTime);
         return smartFarmService.getLastSmartFarm();
     }
 
     @PostMapping("/data")
     @ResponseBody
     public SmartFarm getdata_p(){
-        System.out.println("Post Request checked");
+        LocalDateTime currentTime = LocalDateTime.now();
+        System.out.println("Post Request checked " + currentTime);
         return smartFarmService.getLastSmartFarm();
     }
 }

@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.time.LocalDateTime;
+
 @Controller
 public class ReceiveController {
 
@@ -35,7 +37,8 @@ public class ReceiveController {
     @PostMapping("/")
     @ResponseBody
     public void handleFileUpload(@RequestBody SmartFarm smartFarm) throws Exception {
-        System.out.println("Received JSON data: " + smartFarm);
+        LocalDateTime currentTime = LocalDateTime.now();
+        System.out.println("Received JSON data: " + smartFarm + " " + currentTime);
 
         // 데이터베이스에 Json 데이터를 처리하고 저장
         smartFarmService.join(smartFarm);
