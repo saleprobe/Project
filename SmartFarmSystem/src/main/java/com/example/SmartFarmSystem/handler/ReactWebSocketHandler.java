@@ -1,4 +1,4 @@
-package com.example.SmartFarmSystem;
+package com.example.SmartFarmSystem.handler;
 
 import com.example.SmartFarmSystem.domain.SmartFarm;
 import com.example.SmartFarmSystem.service.SmartFarmService;
@@ -26,5 +26,6 @@ public class ReactWebSocketHandler extends TextWebSocketHandler {
         ObjectMapper objectMapper = new ObjectMapper();
         String json = objectMapper.writeValueAsString(latestSmartFarm);
         session.sendMessage(new TextMessage(json));
+        System.out.println("Socket Request checked");
     }
 }
