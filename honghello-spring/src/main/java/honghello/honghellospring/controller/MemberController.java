@@ -19,12 +19,12 @@ public class MemberController {
         this.memberService = memberService;
     }
 
-    @GetMapping("/members/new")
+    @GetMapping("/members/new")  // 회원가입 페이지로 이동
     public String createForm(){
         return "members/createMemberForm";
     }
 
-    @PostMapping("/members/new")
+    @PostMapping("/members/new")  // 회원정보를 받아오는 API
     public String create(MemberForm form){
 
         Member member = new Member();
@@ -35,7 +35,7 @@ public class MemberController {
         return "redirect:/";
     }
 
-    @GetMapping("/members")
+    @GetMapping("/members")  // 회원목록 페이지로 이동
     public String list(Model model){
         List<Member> members = memberService.findMembers();
         model.addAttribute("members", members);
