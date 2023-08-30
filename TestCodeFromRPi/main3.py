@@ -18,7 +18,7 @@ def on_message(ws, message):
 
 # 웹소켓 서버 URL
 # websocket_url = 'ws://203.230.100.170:10095/raspberrypi-websocket'
-websocket_url = 'ws://localhost:3000/raspberrypi-websocket'
+websocket_url = 'ws://localhost:3000/raspberrypi_websocket'
 # websocket_url = 'ws://localhost:3000/react-websocket'
 # websocket_url = 'ws://203.230.100.170:10095/react-websocket'
 # websocket_url = 'ws://203.230.100.170:10095/react-websocket-json'

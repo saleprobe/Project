@@ -31,7 +31,7 @@ public class HardWareRController {
     @ResponseBody
     public SmartFarm getdata_r(){
         LocalDateTime currentTime = LocalDateTime.now();
-        System.out.println("Get Request checked(/raspberrypi) " + currentTime);
+        System.out.println("INFO  Get Request checked(/raspberrypi) " + currentTime);
         return smartFarmService.getLastSmartFarm();
     }
 
@@ -39,7 +39,7 @@ public class HardWareRController {
     @ResponseBody
     public void savedata_r(@RequestBody SmartFarm smartFarm) throws Exception {
         LocalDateTime currentTime = LocalDateTime.now();
-        System.out.println("Received JSON data: " + smartFarm + " from raspberrypi " + currentTime);
+        System.out.println("INFO  Received JSON data: " + smartFarm + " from raspberrypi " + currentTime);
 
         // 데이터베이스에 Json 데이터를 처리하고 저장
         smartFarmService.join(smartFarm);

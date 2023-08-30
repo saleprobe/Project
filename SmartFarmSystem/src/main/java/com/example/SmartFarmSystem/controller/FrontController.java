@@ -24,7 +24,7 @@ public class FrontController {
     @ResponseBody
     public SmartFarm react(@RequestBody SmartFarm smartFarm) throws Exception {
         LocalDateTime currentTime = LocalDateTime.now();
-        System.out.println("Post Request checked(/react) " + currentTime);
+        System.out.println("INFO  post request checked(/react) " + currentTime);
         smartFarmService.join(smartFarm);
 
         return smartFarmService.getLastSmartFarm();

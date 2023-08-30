@@ -26,7 +26,7 @@ public class RaspberryPiWebSocketHandler extends TextWebSocketHandler {
         ObjectMapper objectMapper = new ObjectMapper();
         String json = objectMapper.writeValueAsString(latestSmartFarm);
         session.sendMessage(new TextMessage(json));
-        System.out.println("Socket Request checked");
+        System.out.println("INFO  Socket Request checked(from Pi)");
 
     }
 }

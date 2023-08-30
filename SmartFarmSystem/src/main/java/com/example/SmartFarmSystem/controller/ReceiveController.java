@@ -23,8 +23,8 @@ public class ReceiveController {
     @PostMapping("/upload")
     @ResponseBody
     public void handleFileUpload(@RequestParam("jsonFile") MultipartFile file) throws Exception {
-        System.out.println("Received file: " + file.getOriginalFilename());
-        System.out.println("File size: " + file.getSize() + " bytes");
+        System.out.println("INFO  Received file: " + file.getOriginalFilename());
+        System.out.println("INFO  File size: " + file.getSize() + " bytes");
 
         // 파일 처리 로직
         ObjectMapper objectMapper = new ObjectMapper();
@@ -38,7 +38,7 @@ public class ReceiveController {
     @ResponseBody
     public void handleFileUpload(@RequestBody SmartFarm smartFarm) throws Exception {
         LocalDateTime currentTime = LocalDateTime.now();
-        System.out.println("Received JSON data: " + smartFarm + " " + currentTime);
+        System.out.println("INFO  Received JSON data: " + smartFarm + " " + currentTime);
 
         // 데이터베이스에 Json 데이터를 처리하고 저장
         smartFarmService.join(smartFarm);

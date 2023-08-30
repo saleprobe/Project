@@ -1,8 +1,8 @@
 package com.example.SmartFarmSystem;
 
-import com.example.SmartFarmSystem.service.SmartFarmService;
+import com.example.SmartFarmSystem.handler.RaspberryPiWebSocketHandler;
+import com.example.SmartFarmSystem.handler.ReactWebSocketHandler;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
@@ -26,8 +26,9 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(raspberryPiWebSocketHandler, "/raspberrypi-websocket").setAllowedOrigins("*");
-        registry.addHandler(reactWebSocketHandler, "/react-websocket").setAllowedOrigins("*");
+        registry.addHandler(raspberryPiWebSocketHandler, "/raspberrypi_websocket").setAllowedOrigins("*");
+        registry.addHandler(reactWebSocketHandler, "/react_websocket").setAllowedOrigins("*");
+        System.out.println("INFO  Spring Boot Embedded Socket Request checked");
     }
 
 }

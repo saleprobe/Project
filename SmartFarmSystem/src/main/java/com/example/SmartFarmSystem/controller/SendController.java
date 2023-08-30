@@ -24,7 +24,7 @@ public class SendController {
     @ResponseBody
     public SmartFarm getdata_g(){
         LocalDateTime currentTime = LocalDateTime.now();
-        System.out.println("Get Request checked " + currentTime);
+        System.out.println("INFO  Get Request checked " + currentTime);
         return smartFarmService.getLastSmartFarm();
     }
 
@@ -32,7 +32,7 @@ public class SendController {
     @ResponseBody
     public SmartFarm getdata_p(){
         LocalDateTime currentTime = LocalDateTime.now();
-        System.out.println("Post Request checked " + currentTime);
+        System.out.println("INFO  Post Request checked " + currentTime);
         return smartFarmService.getLastSmartFarm();
     }
 }
