@@ -22,7 +22,7 @@ public class MemberController {
     @PostMapping("/member/register")
     @ResponseBody
     public void registerMember(@RequestBody Member member) throws Exception {
-        System.out.println("member registered!");
+        System.out.println("INFO  member registered!");
         memberService.registerMember(member);
     }
 
