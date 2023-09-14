@@ -8,11 +8,9 @@
 <body>
 <div>
   <h1><a th:href="|/${loginType}|">[[${pageName}]]</a></h1> <hr/>
-  <h2>유저 정보</h2>
+  <h2>스마트팜 고유번호</h2>
   <div>
-    <div th:text="|로그인 아이디 : ${user.loginId}|"/>
-    <div th:text="|이름 : ${user.nickname}|"/>
-    <div th:text="|권한 : ${user.role}|"/>
+    <div th:text="|스마트팜 고유번호 : ${user.sf_id}|"/>
   </div>
 </div>
 </body>
