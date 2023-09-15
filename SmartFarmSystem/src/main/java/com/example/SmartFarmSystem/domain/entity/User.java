@@ -17,6 +17,11 @@ public class User {
     private String loginId;
     private String password;
     private String nickname;
+    private int sf_id;
+    private String cropname;
+    private short period;
+    private String variety;
+    private short growthstate;
 
     private UserRole role;
 }

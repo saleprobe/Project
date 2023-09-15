@@ -25,7 +25,7 @@ public class SessionLoginController {
     @GetMapping(value = {"", "/"})
     public String home(Model model, @SessionAttribute(name = "userId", required = false) Long userId) {
         model.addAttribute("loginType", "session-login");
-        model.addAttribute("pageName", "로그인 페이지");
+        model.addAttribute("pageName", "마이 페이지");
 
         User loginUser = userService.getLoginUserById(userId);
 
@@ -39,7 +39,7 @@ public class SessionLoginController {
     @GetMapping("/join")
     public String joinPage(Model model) {
         model.addAttribute("loginType", "session-login");
-        model.addAttribute("pageName", "로그인 페이지");
+        model.addAttribute("pageName", "마이 페이지");
 
         model.addAttribute("joinRequest", new JoinRequest());
         return "join";
@@ -48,7 +48,7 @@ public class SessionLoginController {
     @PostMapping("/join")
     public String join(@Valid @ModelAttribute JoinRequest joinRequest, BindingResult bindingResult, Model model) {
         model.addAttribute("loginType", "session-login");
-        model.addAttribute("pageName", "로그인 페이지");
+        model.addAttribute("pageName", "마이 페이지");
 
         // loginId 중복 체크
         if(userService.checkLoginIdDuplicate(joinRequest.getLoginId())) {
@@ -74,7 +74,7 @@ public class SessionLoginController {
     @GetMapping("/login")
     public String loginPage(Model model) {
         model.addAttribute("loginType", "session-login");
-        model.addAttribute("pageName", "로그인 페이지");
+        model.addAttribute("pageName", "마이 페이지");
 
         model.addAttribute("loginRequest", new LoginRequest());
         return "login";
@@ -84,7 +84,7 @@ public class SessionLoginController {
     public String login(@ModelAttribute LoginRequest loginRequest, BindingResult bindingResult,
                         HttpServletRequest httpServletRequest, Model model) {
         model.addAttribute("loginType", "session-login");
-        model.addAttribute("pageName", "로그인 페이지");
+        model.addAttribute("pageName", "마이 페이지");
 
         User user = userService.login(loginRequest);
 
@@ -112,7 +112,7 @@ public class SessionLoginController {
     @GetMapping("/logout")
     public String logout(HttpServletRequest request, Model model) {
         model.addAttribute("loginType", "session-login");
-        model.addAttribute("pageName", "로그인 페이지");
+        model.addAttribute("pageName", "마이 페이지");
 
         HttpSession session = request.getSession(false);  // Session이 없으면 null return
         if(session != null) {
@@ -124,7 +124,7 @@ public class SessionLoginController {
     @GetMapping("/info")
     public String userInfo(@SessionAttribute(name = "userId", required = false) Long userId, Model model) {
         model.addAttribute("loginType", "session-login");
-        model.addAttribute("pageName", "로그인 페이지");
+        model.addAttribute("pageName", "마이 페이지");
 
         User loginUser = userService.getLoginUserById(userId);
 
@@ -136,10 +136,40 @@ public class SessionLoginController {
         return "info";
     }
 
+    @GetMapping("/info_sf_id")
+    public String sfidInfo(@SessionAttribute(name = "userId", required = false) Long userId, Model model) {
+        model.addAttribute("loginType", "session-login");
+        model.addAttribute("pageName", "마이 페이지");
+
+        User loginUser = userService.getLoginUserById(userId);
+
+        if(loginUser == null) {
+            return "redirect:/session-login/login";
+        }
+
+        model.addAttribute("user", loginUser);
+        return "info_sf_id";
+    }
+
+    @GetMapping("/info_crop")
+    public String cropInfo(@SessionAttribute(name = "userId", required = false) Long userId, Model model) {
+        model.addAttribute("loginType", "session-login");
+        model.addAttribute("pageName", "마이 페이지");
+
+        User loginUser = userService.getLoginUserById(userId);
+
+        if(loginUser == null) {
+            return "redirect:/session-login/login";
+        }
+
+        model.addAttribute("user", loginUser);
+        return "info_crop";
+    }
+
     @GetMapping("/admin")
     public String adminPage(@SessionAttribute(name = "userId", required = false) Long userId, Model model) {
         model.addAttribute("loginType", "session-login");
-        model.addAttribute("pageName", "로그인 페이지");
+        model.addAttribute("pageName", "마이 페이지");
 
         User loginUser = userService.getLoginUserById(userId);
 
