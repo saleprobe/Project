@@ -9,11 +9,15 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
 
 @Controller
 @RequiredArgsConstructor
@@ -29,7 +33,7 @@ public class SessionLoginController {
 
         User loginUser = userService.getLoginUserById(userId);
 
-        if(loginUser != null) {
+        if (loginUser != null) {
             model.addAttribute("nickname", loginUser.getNickname());
         }
 
@@ -51,19 +55,19 @@ public class SessionLoginController {
         model.addAttribute("pageName", "마이 페이지");
 
         // loginId 중복 체크
-        if(userService.checkLoginIdDuplicate(joinRequest.getLoginId())) {
+        if (userService.checkLoginIdDuplicate(joinRequest.getLoginId())) {
             bindingResult.addError(new FieldError("joinRequest", "loginId", "로그인 아이디가 중복됩니다."));
         }
         // 닉네임 중복 체크
-        if(userService.checkNicknameDuplicate(joinRequest.getNickname())) {
+        if (userService.checkNicknameDuplicate(joinRequest.getNickname())) {
             bindingResult.addError(new FieldError("joinRequest", "nickname", "닉네임이 중복됩니다."));
         }
         // password와 passwordCheck가 같은지 체크
-        if(!joinRequest.getPassword().equals(joinRequest.getPasswordCheck())) {
+        if (!joinRequest.getPassword().equals(joinRequest.getPasswordCheck())) {
             bindingResult.addError(new FieldError("joinRequest", "passwordCheck", "바밀번호가 일치하지 않습니다."));
         }
 
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             return "join";
         }
 
@@ -89,11 +93,11 @@ public class SessionLoginController {
         User user = userService.login(loginRequest);
 
         // 로그인 아이디나 비밀번호가 틀린 경우 global error return
-        if(user == null) {
+        if (user == null) {
             bindingResult.reject("loginFail", "로그인 아이디 또는 비밀번호가 틀렸습니다.");
         }
 
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             return "login";
         }
 
@@ -115,7 +119,7 @@ public class SessionLoginController {
         model.addAttribute("pageName", "마이 페이지");
 
         HttpSession session = request.getSession(false);  // Session이 없으면 null return
-        if(session != null) {
+        if (session != null) {
             session.invalidate();
         }
         return "redirect:/session-login";
@@ -128,7 +132,7 @@ public class SessionLoginController {
 
         User loginUser = userService.getLoginUserById(userId);
 
-        if(loginUser == null) {
+        if (loginUser == null) {
             return "redirect:/session-login/login";
         }
 
@@ -143,7 +147,7 @@ public class SessionLoginController {
 
         User loginUser = userService.getLoginUserById(userId);
 
-        if(loginUser == null) {
+        if (loginUser == null) {
             return "redirect:/session-login/login";
         }
 
@@ -155,10 +159,11 @@ public class SessionLoginController {
     public String cropInfo(@SessionAttribute(name = "userId", required = false) Long userId, Model model) {
         model.addAttribute("loginType", "session-login");
         model.addAttribute("pageName", "마이 페이지");
-
+        System.out.println("/info_crop    userId: " + userId);
         User loginUser = userService.getLoginUserById(userId);
+        System.out.println("/info_crop    loginUser: " + loginUser);
 
-        if(loginUser == null) {
+        if (loginUser == null) {
             return "redirect:/session-login/login";
         }
 
@@ -173,14 +178,48 @@ public class SessionLoginController {
 
         User loginUser = userService.getLoginUserById(userId);
 
-        if(loginUser == null) {
+        if (loginUser == null) {
             return "redirect:/session-login/login";
         }
 
-        if(!loginUser.getRole().equals(UserRole.ADMIN)) {
+        if (!loginUser.getRole().equals(UserRole.ADMIN)) {
             return "redirect:/session-login";
         }
 
         return "admin";
+    }
+
+    @PostMapping("/inject_sf_id")
+    public ResponseEntity<String> injectSfId(
+            @SessionAttribute(name = "userId", required = false) Long userId,
+            @RequestParam("user_sf_id") int userSfId, Model model) {
+        model.addAttribute("loginType", "session-login");
+        model.addAttribute("pageName", "마이 페이지");
+        System.out.println(userId);
+        System.out.println(userSfId);
+        if (userId == null) {
+            // 로그인되지 않은 경우에 대한 처리
+            System.out.println("INFO    Not Login");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body("User not logged in.");
+        }
+
+        // 로그인된 사용자의 user_sf_id 값을 업데이트
+        userService.updateUserSfId(userId, userSfId);
+
+        return ResponseEntity.ok("User SF ID updated successfully.");
+    }
+
+    @GetMapping("/get_session_id")
+    public ResponseEntity<String> getSessionId(HttpServletRequest request) {
+        HttpSession session = request.getSession(false); // 세션이 없을 경우 null을 반환
+
+        if (session != null) {
+            String sessionId = session.getId();
+            return ResponseEntity.ok("Session ID: " + sessionId);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body("Session not found.");
+        }
     }
 }
