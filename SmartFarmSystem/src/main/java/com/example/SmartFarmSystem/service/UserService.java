@@ -109,4 +109,14 @@ public class UserService {
 
         return optionalUser.get();
     }
+
+    public void updateUserSfId(Long userId, int userSfId) {
+        User user = userRepository.findById(userId).orElse(null);
+
+        if (user != null) {
+            user.setUserSfId(userSfId); // User 엔터티 클래스의 set 메소드를 활용하여 업데이트
+            userRepository.save(user);
+        }
+    }
+
 }
