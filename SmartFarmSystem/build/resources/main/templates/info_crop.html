@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="|${pageName}|"></title>
+</head>
+<body>
+<div>
+  <h1><a th:href="|/${loginType}|">[[${pageName}]]</a></h1> <hr/>
+  <h2>작물 정보 및 생장 상태</h2>
+  <div>
+    <div th:text="|작물 이름 : ${user.cropname}|"/>
+    <div th:text="|작물 기른 기간 : ${user.period}|"/>
+    <div th:text="|작물 품종 : ${user.variety}|"/>
+    <div th:text="|작물 생장 상태 : ${user.growthstate}|"/>
+  </div>
+</div>
+</body>
+</html>

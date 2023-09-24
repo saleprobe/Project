@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="|${pageName}|"></title>
+</head>
+<body>
+<div>
+  <h1><a th:href="|/${loginType}|">[[${pageName}]]</a></h1> <hr/>
+  <h2>스마트팜 고유번호</h2>
+  <div>
+    <div th:text="|스마트팜 고유번호 : ${user.user_sf_id}|"/>
+  </div>
+</div>
+</body>
+</html>
