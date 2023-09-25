@@ -27,7 +27,6 @@ public class User {
 
     private String cropname;
     private short period;
-    private String variety;
     private short growthstate;
 
     private UserRole role;
