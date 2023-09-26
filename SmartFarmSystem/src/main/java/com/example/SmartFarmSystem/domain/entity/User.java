@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Digits;
 import lombok.*;
 
+import java.math.BigDecimal;
+
 @Entity
 @Builder
 @Getter
@@ -27,7 +29,9 @@ public class User {
 
     private String cropname;
     private short period;
-    private short growthstate;
+
+    @Column(precision = 3, scale = 2, nullable = true)
+    private BigDecimal ndvi;
 
     private UserRole role;
     public void setUserSfId(int userSfId) {
