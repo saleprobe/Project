@@ -108,7 +108,7 @@ public class SessionLoginController {
         HttpSession session = httpServletRequest.getSession(true);  // Session이 없으면 생성
         // 세션에 userId를 넣어줌
         session.setAttribute("userId", user.getId());
-        session.setMaxInactiveInterval(1800); // Session이 30분동안 유지
+        session.setMaxInactiveInterval(43200); // Session이 30분동안 유지
 
         return "redirect:/session-login";
     }
