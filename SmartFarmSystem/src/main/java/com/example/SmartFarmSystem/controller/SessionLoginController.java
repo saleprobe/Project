@@ -21,14 +21,14 @@ import java.time.LocalDateTime;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/session-login")
+@RequestMapping("/user_related")
 public class SessionLoginController {
 
     private final UserService userService;
 
     @GetMapping(value = {"", "/"})
     public String home(Model model, @SessionAttribute(name = "userId", required = false) Long userId) {
-        model.addAttribute("loginType", "session-login");
+        model.addAttribute("loginType", "user_related");
         model.addAttribute("pageName", "마이 페이지");
 
         User loginUser = userService.getLoginUserById(userId);
@@ -42,7 +42,7 @@ public class SessionLoginController {
 
     @GetMapping("/join")
     public String joinPage(Model model) {
-        model.addAttribute("loginType", "session-login");
+        model.addAttribute("loginType", "user_related");
         model.addAttribute("pageName", "마이 페이지");
 
         model.addAttribute("joinRequest", new JoinRequest());
@@ -51,7 +51,7 @@ public class SessionLoginController {
 
     @PostMapping("/join")
     public String join(@Valid @ModelAttribute JoinRequest joinRequest, BindingResult bindingResult, Model model) {
-        model.addAttribute("loginType", "session-login");
+        model.addAttribute("loginType", "user_related");
         model.addAttribute("pageName", "마이 페이지");
 
         // loginId 중복 체크
@@ -72,12 +72,12 @@ public class SessionLoginController {
         }
 
         userService.join(joinRequest);
-        return "redirect:/session-login";
+        return "redirect:/user_related";
     }
 
     @GetMapping("/login")
     public String loginPage(Model model) {
-        model.addAttribute("loginType", "session-login");
+        model.addAttribute("loginType", "user_related");
         model.addAttribute("pageName", "마이 페이지");
 
         model.addAttribute("loginRequest", new LoginRequest());
@@ -87,7 +87,7 @@ public class SessionLoginController {
     @PostMapping("/login")
     public String login(@ModelAttribute LoginRequest loginRequest, BindingResult bindingResult,
                         HttpServletRequest httpServletRequest, Model model) {
-        model.addAttribute("loginType", "session-login");
+        model.addAttribute("loginType", "user_related");
         model.addAttribute("pageName", "마이 페이지");
 
         User user = userService.login(loginRequest);
@@ -110,30 +110,30 @@ public class SessionLoginController {
         session.setAttribute("userId", user.getId());
         session.setMaxInactiveInterval(43200); // Session이 30분동안 유지
 
-        return "redirect:/session-login";
+        return "redirect:/user_related";
     }
 
     @GetMapping("/logout")
     public String logout(HttpServletRequest request, Model model) {
-        model.addAttribute("loginType", "session-login");
+        model.addAttribute("loginType", "user_related");
         model.addAttribute("pageName", "마이 페이지");
 
         HttpSession session = request.getSession(false);  // Session이 없으면 null return
         if (session != null) {
             session.invalidate();
         }
-        return "redirect:/session-login";
+        return "redirect:/user_related";
     }
 
     @GetMapping("/info")
     public String userInfo(@SessionAttribute(name = "userId", required = false) Long userId, Model model) {
-        model.addAttribute("loginType", "session-login");
+        model.addAttribute("loginType", "user_related");
         model.addAttribute("pageName", "마이 페이지");
 
         User loginUser = userService.getLoginUserById(userId);
 
         if (loginUser == null) {
-            return "redirect:/session-login/login";
+            return "redirect:/user_related/login";
         }
 
         model.addAttribute("user", loginUser);
@@ -142,13 +142,13 @@ public class SessionLoginController {
 
     @GetMapping("/info_sf_id")
     public String sfidInfo(@SessionAttribute(name = "userId", required = false) Long userId, Model model) {
-        model.addAttribute("loginType", "session-login");
+        model.addAttribute("loginType", "user_related");
         model.addAttribute("pageName", "마이 페이지");
 
         User loginUser = userService.getLoginUserById(userId);
 
         if (loginUser == null) {
-            return "redirect:/session-login/login";
+            return "redirect:/user_related/login";
         }
 
         model.addAttribute("user", loginUser);
@@ -157,14 +157,14 @@ public class SessionLoginController {
 
     @GetMapping("/info_crop")
     public String cropInfo(@SessionAttribute(name = "userId", required = false) Long userId, Model model) {
-        model.addAttribute("loginType", "session-login");
+        model.addAttribute("loginType", "user_related");
         model.addAttribute("pageName", "마이 페이지");
         System.out.println("/info_crop    userId: " + userId);
         User loginUser = userService.getLoginUserById(userId);
         System.out.println("/info_crop    loginUser: " + loginUser);
 
         if (loginUser == null) {
-            return "redirect:/session-login/login";
+            return "redirect:/user_related/login";
         }
 
         model.addAttribute("user", loginUser);
@@ -173,17 +173,17 @@ public class SessionLoginController {
 
     @GetMapping("/admin")
     public String adminPage(@SessionAttribute(name = "userId", required = false) Long userId, Model model) {
-        model.addAttribute("loginType", "session-login");
+        model.addAttribute("loginType", "user_related");
         model.addAttribute("pageName", "마이 페이지");
 
         User loginUser = userService.getLoginUserById(userId);
 
         if (loginUser == null) {
-            return "redirect:/session-login/login";
+            return "redirect:/user_related/login";
         }
 
         if (!loginUser.getRole().equals(UserRole.ADMIN)) {
-            return "redirect:/session-login";
+            return "redirect:/user_related";
         }
 
         return "admin";
@@ -193,7 +193,7 @@ public class SessionLoginController {
     public ResponseEntity<String> injectSfId(
             @SessionAttribute(name = "userId", required = false) Long userId,
             @RequestParam("user_sf_id") int userSfId, Model model) {
-        model.addAttribute("loginType", "session-login");
+        model.addAttribute("loginType", "user_related");
         model.addAttribute("pageName", "마이 페이지");
         System.out.println(userId);
         System.out.println(userSfId);
