@@ -1,7 +1,7 @@
 import requests
 
 # Spring Boot 애플리케이션의 로그인 URL
-login_url = 'http://localhost:3000/session-login/login'
+login_url = 'http://localhost:3000/user_related/login'
 
 # 로그인에 사용할 사용자 정보 (예: 로그인 아이디와 비밀번호)
 login_data = {
@@ -23,5 +23,6 @@ with requests.Session() as session:
 
 # 세션 쿠키를 출력
 print("Session Cookie:", session_cookie)
+print(response.status_code)
 
 # 이제 세션 쿠키를 사용하여 다른 요청을 보낼 수 있음.
