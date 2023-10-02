@@ -49,7 +49,7 @@ public class SessionLoginController {
         return "join";
     }
 
-    @PostMapping("/join")
+    @PostMapping("/join")  // 회원가입 API
     public ResponseEntity<String> join(@Valid @ModelAttribute JoinRequest joinRequest, BindingResult bindingResult, Model model) {
         model.addAttribute("loginType", "user_related");
         model.addAttribute("pageName", "마이 페이지");
@@ -87,7 +87,7 @@ public class SessionLoginController {
         return "login";
     }
 
-    @PostMapping("/login")
+    @PostMapping("/login")  // 로그인 API
     public ResponseEntity<String> login(@ModelAttribute LoginRequest loginRequest, BindingResult bindingResult,
                                         HttpServletRequest httpServletRequest, Model model) {
         model.addAttribute("loginType", "user_related");
@@ -196,7 +196,7 @@ public class SessionLoginController {
         return "admin";
     }
 
-    @PostMapping("/inject_sf_id")
+    @PostMapping("/inject_sf_id")  // 스마트팜 고유번호 등록 API
     public ResponseEntity<String> injectSfId(
             @SessionAttribute(name = "userId", required = false) Long userId,
             @RequestParam("user_sf_id") int userSfId, Model model) {
