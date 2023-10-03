@@ -231,4 +231,19 @@ public class SessionLoginController {
                     .body("Session not found.");
         }
     }
+
+    @GetMapping("/get_nickname")
+    public ResponseEntity<String> getLoggedInUserNickname(@SessionAttribute(name = "userId", required = false) Long userId) {
+        if (userId != null) {
+            User loginUser = userService.getLoginUserById(userId);
+            if (loginUser != null) {
+                String nickname = loginUser.getNickname();
+                return ResponseEntity.ok(nickname); // 닉네임을 그대로 반환
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("사용자를 불러올 수 없습니다.");
+            }
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("로그인되지 않은 사용자입니다.");
+        }
+    }
 }
