@@ -120,4 +120,20 @@ public class UserService {
         return false;
     }
 
+    public boolean updateUserCrop(Long userId, String cropname, short period) {
+        User user = userRepository.findById(userId).orElse(null);
+
+        if (user != null) {
+            // 여기에서 cropname과 period를 User 엔터티 클래스의 적절한 메소드를 활용하여 업데이트
+            // 예를 들어, setUserCropname() 및 setUserPeriod() 메소드를 사용하여 업데이트
+
+            user.setUserCropname(cropname);
+            user.setUserPeriod(period);
+
+            userRepository.save(user);
+            return true; // 업데이트 성공
+        }
+        return false; // 업데이트 실패
+    }
+
 }

@@ -37,4 +37,12 @@ public class User {
     public void setUserSfId(int userSfId) {
         this.user_sf_id = userSfId;
     }
+
+    public void setUserCropname(String cropname) {
+        this.cropname = cropname;
+    }
+
+    public void setUserPeriod(short period) {
+        this.period = period;
+    }
 }
