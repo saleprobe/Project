@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -22,6 +23,11 @@ public class SmartFarmService {
 
     public SmartFarm join(SmartFarm smartFarm) {
         return smartFarmRepository.save(smartFarm);
+    }
+
+    public SmartFarm findBySfId(int userSfId) {
+        Optional<SmartFarm> smartFarm = smartFarmRepository.findBysfid(userSfId);
+        return smartFarm.orElse(null);
     }
 
     public SmartFarm findLatestSmartFarmBySfId(Long sf_id) {
