@@ -20,7 +20,7 @@ public class SmartFarmController {
         this.smartFarmService = smartFarmService;
     }
 
-    @GetMapping("/check_sf_id")
+    @GetMapping("/check_able_sf_id")
     public ResponseEntity<String> checkUserCode(@RequestParam("user_sf_id") int user_sf_id) {
         // SmartFarm 테이블에서 user_sf_id와 일치하는 sf_id를 찾음
         SmartFarm smartFarm = smartFarmService.findBySfId(user_sf_id);
