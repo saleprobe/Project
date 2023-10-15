@@ -45,4 +45,12 @@ public class User {
     public void setUserPeriod(short period) {
         this.period = period;
     }
+
+    public int getUserSfId() {
+        return user_sf_id;
+    }
+
+    public String getCropName() {
+        return cropname;
+    }
 }

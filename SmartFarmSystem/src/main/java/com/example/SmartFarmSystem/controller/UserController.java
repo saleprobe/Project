@@ -17,6 +17,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/user_related")
@@ -263,5 +266,38 @@ public class UserController {
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("로그인되지 않은 사용자입니다.");
         }
+    }
+
+    @GetMapping("/get_n_ussi_crn")
+    public ResponseEntity<Map<String, Object>> getLoggedInUserDetails(@SessionAttribute(name = "userId", required = false) Long userId) {
+        Map<String, Object> response = new HashMap<>();
+
+        if (userId != null) {
+            User loginUser = userService.getLoginUserById(userId);
+            if (loginUser != null) {
+                String nickname = loginUser.getNickname();
+                int userSfId = loginUser.getUserSfId();
+                String cropName = loginUser.getCropName();
+
+                response.put("nickname", nickname);
+
+                if (userSfId == 0) {
+                    response.put("usersfidRegistable", 200);
+                } else {
+                    response.put("usersfidRegistable", 400);
+                }
+
+                if (cropName == null) {
+                    response.put("cropnameRegistable", 200);
+                } else {
+                    response.put("cropnameRegistable", 400);
+                }
+
+                return ResponseEntity.ok(response);
+            }
+        }
+
+        response.put("error", "사용자 정보를 불러올 수 없거나 로그인되지 않았습니다.");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 }
