@@ -5,6 +5,7 @@ import com.example.SmartFarmSystem.domain.dto.LoginRequest;
 import com.example.SmartFarmSystem.domain.entity.User;
 import com.example.SmartFarmSystem.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,8 +18,8 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    // Spring Security를 사용한 로그인 구현 시 사용
-    // private final BCryptPasswordEncoder encoder;
+//     Spring Security를 사용한 로그인 구현 시 사용
+//     private final BCryptPasswordEncoder encoder;
 
     /**
      * loginId 중복 체크
@@ -79,6 +80,10 @@ public class UserService {
 
         return user;
     }
+
+//    public void join2(JoinRequest req) {
+//        userRepository.save(req.toEntity(encoder.encode(req.getPassword())));
+//    }
 
     /**
      * userId(Long)를 입력받아 User을 return 해주는 기능
