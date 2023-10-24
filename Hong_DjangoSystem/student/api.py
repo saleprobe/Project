@@ -22,6 +22,15 @@ class StudentList(APIView):
 class StudentDetail(APIView):
 
     def get(self, request, student_id):
+
         model = Student.objects.get(student_id=student_id)
         serializer = StudentSerializer(model)
         return Response(serializer.data)
+
+    def put(self, request, student_id):
+
+        serializer = StudentSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
