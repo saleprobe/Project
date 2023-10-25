@@ -29,7 +29,9 @@ class StudentDetail(APIView):
 
     def put(self, request, student_id):
 
-        serializer = StudentSerializer(data=request.data)
+        model = Student.objects.get(student_id=student_id)
+
+        serializer = StudentSerializer(model, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
